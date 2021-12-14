@@ -53,4 +53,5 @@ func extend() {
 func main() {
     base()
     extend()
+    // 切面不能作为返回值？
 }
