@@ -1,5 +1,9 @@
 package tree
 
+import (
+	"fmt"
+)
+
 type Node struct {
 	Value       int
 	Left, Right *Node

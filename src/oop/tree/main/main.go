@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golean/tree"
+	"oop/tree"
 )
 
 func main() {
@@ -13,7 +13,6 @@ func main() {
 	 *        5
 	 *      6   7
 	 */
-
 	nodes := []tree.Node{
 		{Value: 0}, {Value: 1}, {Value: 2}, {Value: 3},
 		{Value: 4}, {Value: 5}, {Value: 6}, {Value: 7},

@@ -31,3 +31,9 @@
 
 ## GOPATH
 * gopm
+
+## 工作区
+* src 源码
+* pkg 存放go install 命令构建后的代码包
+* bin 保存可执行文件
+
