@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"oop/tree"
 )
 
@@ -27,4 +28,23 @@ func main() {
 	nodes[5].Right = &nodes[7]
 
 	nodes[0].MidRecursion()
+
+	fmt.Println()
+
+	nodes[0].TraverseWithFunc(
+		func(node *tree.Node) {
+			fmt.Printf("%d ", node.Value)
+		},
+	)
+
+	fmt.Println()
+
+	c := nodes[0].TraverseWithChannel()
+	maxValue := 0
+	for node := range c {
+		if node.Value > maxValue {
+			maxValue = node.Value
+		}
+	}
+	fmt.Println("maxValue is ", maxValue)
 }
