@@ -13,7 +13,7 @@ func ParseCityList(contents []byte) engine.ParseResult {
 
 	result := engine.ParseResult{}
 
-	limit := 1
+	limit := 10
 
 	for _, m := range matchs {
 		result.Items = append(result.Items, "City "+string(m[2]))

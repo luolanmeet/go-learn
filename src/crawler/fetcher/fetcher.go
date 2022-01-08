@@ -2,7 +2,6 @@ package fetcher
 
 import (
 	"bufio"
-	"fmt"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/unicode"
@@ -10,9 +9,15 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
+var rateLimiter = time.Tick(100 * time.Millisecond)
+
 func Fetch(url string) ([]byte, error) {
+
+	// 限流
+	<-rateLimiter
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -21,8 +26,8 @@ func Fetch(url string) ([]byte, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("error: status code %d", resp.StatusCode)
-		//return []byte(""), nil
+		//return nil, fmt.Errorf("error: status code %d", resp.StatusCode)
+		return []byte(""), nil
 	}
 
 	bodyReader := bufio.NewReader(resp.Body)
