@@ -17,12 +17,14 @@ func ParseCity(contents []byte) engine.ParseResult {
 
 	result := engine.ParseResult{}
 	for _, m := range matchs {
-		result.Items = append(result.Items, "User "+string(m[2]))
+		name := string(m[2])
+		gender := string(m[3])
+		result.Items = append(result.Items, "User "+name)
 		request := engine.Request{
 			Url: string(m[1]),
 			// 通过函数式编程， 适配不兼容的接口
 			ParserFunc: func(c []byte) engine.ParseResult {
-				return ParseProfile(c, string(m[2]), string(m[3]))
+				return ParseProfile(c, name, gender)
 			},
 		}
 		result.Requests = append(result.Requests, request)
