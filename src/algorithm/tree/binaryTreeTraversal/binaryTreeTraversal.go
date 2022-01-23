@@ -140,8 +140,7 @@ func level(node *dataStructure.TreeNode) {
 		size := len(queue)
 		for i := 0; i < size; i++ {
 
-			node = queue[0]
-			queue = queue[1:]
+			node = queue[i]
 
 			fmt.Print(node.Val, " ")
 			if node.Left != nil {
@@ -151,6 +150,8 @@ func level(node *dataStructure.TreeNode) {
 				queue = append(queue, node.Right)
 			}
 		}
+
+		queue = queue[size:]
 	}
 
 }
