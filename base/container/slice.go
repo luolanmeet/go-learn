@@ -66,7 +66,7 @@ func testAppend() {
 }
 
 func other() {
-	// s1 切面内部指向的是不是原数组
+	// s1 切面内部指向的是不是原数组。是原数组
 	arr := [...]int{0, 1, 2, 3, 4, 5, 6, 7}
 	s1 := arr[0:2]
 	fmt.Printf("%v \n", s1)
@@ -76,19 +76,22 @@ func other() {
 
 	// make 创建的切片
 	s2 := make([]int, 2)
-	fmt.Printf("%v \n", s2)
-	s2[0] = 1
-	fmt.Printf("%v \n", s2)
+	// 分隔切片后，新的切片仍和旧的切片指向同个数组
+	s3 := s2[:]
+	fmt.Printf("%v \n", s3)
+	s2[0] = 100
+	s2[1] = 100
+	fmt.Printf("%v \n", s3)
 }
 
-func testAppend2() {
+func testAppend2() []int {
 	s1 := make([]int, 3)
 	s1[0] = 0
 	s1[1] = 1
 	s1[2] = 2
 
 	// append 之后生成的slice，指向的是同个数组吗
-	// 不是
+	// 不是！
 	s2 := append(s1, 3)
 	fmt.Printf("%v \n", s2)
 	s1[0] = 100
@@ -100,21 +103,26 @@ func testAppend2() {
 	fmt.Printf("%v \n", s3)
 	s1[0] = 1000
 	fmt.Printf("%v \n", s3)
+
+	return s1
 }
 
 func main() {
+	fmt.Println("base", "=============")
 	base()
-	fmt.Println("=============")
 
+	fmt.Println("extend", "=============")
 	extend()
-	fmt.Println("=============")
 
+	fmt.Println("testAppend", "=============")
 	testAppend()
-	fmt.Println("=============")
-	other()
-	fmt.Println("=============")
 
-	// 切面不能作为返回值？
-	testAppend2()
+	fmt.Println("other", "=============")
+	other()
+
+	fmt.Println("testAppend2", "=============")
+	// 切面不能作为返回值？可以啊
+	s := testAppend2()
+	fmt.Println(s)
 
 }
