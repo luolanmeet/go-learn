@@ -107,6 +107,14 @@ func testAppend2() []int {
 	return s1
 }
 
+func testAppend3() {
+
+	s := make([]int, 3, 3)
+	s1 := append(s, 1)
+	fmt.Printf("%v \n", s)
+	fmt.Printf("%v \n", s1)
+}
+
 func main() {
 	fmt.Println("base", "=============")
 	base()
@@ -124,5 +132,8 @@ func main() {
 	// 切面不能作为返回值？可以啊
 	s := testAppend2()
 	fmt.Println(s)
+
+	fmt.Println("testAppend3", "=============")
+	testAppend3()
 
 }
