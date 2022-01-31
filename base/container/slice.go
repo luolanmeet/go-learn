@@ -109,10 +109,51 @@ func testAppend2() []int {
 
 func testAppend3() {
 
-	s := make([]int, 3, 3)
+	// 值共享
+	// 期望是 b = [1,3] c = [2,4]
+	// 结果是 b = [1,3] c = [3,4]
+	a := []int{1, 2}
+	fmt.Printf("a =  %v \n", a)
+
+	// 这里，append 之后，把slice a的值也给改了
+	b := append(a[0:1], 3)
+	fmt.Printf("a =  %v \n", a)
+
+	c := append(a[1:2], 4)
+	fmt.Printf("b =  %v \n", b)
+	fmt.Printf("c =  %v \n", c)
+
+	// 可以强迫追加到新数组
+	fmt.Println("--------")
+	a = []int{1, 2}
+	fmt.Printf("a =  %v \n", a)
+
+	b = append(a[0:1:1], 3)
+	fmt.Printf("a =  %v \n", a)
+
+	c = append(a[1:2:2], 4)
+	fmt.Printf("b =  %v \n", b)
+	fmt.Printf("c =  %v \n", c)
+
+}
+
+func testAppend4() {
+
+	// len 是 0 ，所以初始值 {0}，cap是2
+	s := make([]int, 1, 2)
+	fmt.Printf("s=%v \n", s)
+
+	// append 的时候cap够用，不会新开内存空间，而是用原来的s指向的数组存储 {0,1}
+	// append 之后，s的cap还是不会变
 	s1 := append(s, 1)
-	fmt.Printf("%v \n", s)
-	fmt.Printf("%v \n", s1)
+	fmt.Printf("s=%v len=%d cap=%d \n", s, len(s), cap(s))
+	fmt.Printf("s1=%v \n", s1)
+
+	// append 的时候cap够用，不会新开内存空间，而是用原来的s指向的数组存储 {0,2}
+	// 此时由于s1和s2都是指向同个数组，因此s1的值也会被改变{0,1} -> {0,2}
+	s2 := append(s, 2)
+	fmt.Printf("s1=%v \n", s1)
+	fmt.Printf("s2=%v \n", s2)
 }
 
 func main() {
@@ -135,5 +176,8 @@ func main() {
 
 	fmt.Println("testAppend3", "=============")
 	testAppend3()
+
+	fmt.Println("testAppend4", "=============")
+	testAppend4()
 
 }
