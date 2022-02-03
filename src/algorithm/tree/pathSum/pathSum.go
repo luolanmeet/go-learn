@@ -41,7 +41,7 @@ func pathSum2(root *dataStructure.TreeNode, targetSum int) [][]int {
 
 func findPath(root *dataStructure.TreeNode, res [][]int, paths []int, nowSum int, targetSum int) [][]int {
 
-	// 直接用paths，不用copy，会有坑
+	// 直接用paths，不用copy的话会有坑
 	paths = append(paths, root.Val)
 	var tmp = make([]int, len(paths))
 	copy(tmp, paths)
