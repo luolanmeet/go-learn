@@ -7,8 +7,8 @@ import (
 
 func lowestCommonAncestor(root, p, q *dataStructure.TreeNode) *dataStructure.TreeNode {
 
-	var pPaths []*dataStructure.TreeNode
-	var qPaths []*dataStructure.TreeNode
+	pPaths := []*dataStructure.TreeNode{}
+	qPaths := []*dataStructure.TreeNode{}
 	paths := []*dataStructure.TreeNode{}
 
 	var dfs func(node *dataStructure.TreeNode)
@@ -31,7 +31,6 @@ func lowestCommonAncestor(root, p, q *dataStructure.TreeNode) *dataStructure.Tre
 			copy(pPaths, paths)
 		}
 		if node.Val == q.Val {
-			qPaths = make([]*dataStructure.TreeNode, len(paths))
 			copy(qPaths, paths)
 		}
 
@@ -59,8 +58,8 @@ func main() {
 	// [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 
 	root := initTree()
-	res := lowestCommonAncestor(root, root.Right, root.Right.Right.Left)
-	fmt.Println(res.Val)
+	res := lowestCommonAncestor(root, root.Left, root.Right.Right)
+	fmt.Println(res)
 }
 
 func initTree() *dataStructure.TreeNode {
