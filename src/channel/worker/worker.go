@@ -1,6 +1,9 @@
 package main
 
-import "sync"
+// 工作池的goroutine数目
+const (
+	NUMBER = 10
+)
 
 // 定时任务结构体
 type task struct {
@@ -21,20 +24,25 @@ func (t *task) do() {
 
 func main() {
 
+	workers := NUMBER
+
 	// 创建任务通道
 	taskchan := make(chan task, 10)
 
 	// 创建结果通道
 	resultchan := make(chan int, 10)
 
-	// wait用于同步等待任务的执行
-	wait := &sync.WaitGroup{}
+	// worker信号通道
+	done := make(chan struct{}, 10)
 
 	// 初始化task的goroutine，计算100个自然数之和
 	go InitTask(taskchan, resultchan, 100)
 
-	// 每个task启动一个goroutine进行处理
-	go DistributeTask(taskchan, wait, resultchan)
+	// 分配任务到NUMBER个goroutine
+	DistributeTask(taskchan, workers, done)
+
+	// 获取各个goroutine处理完任务的通知，并关闭结果通道
+	go CloseResult(done, resultchan, workers)
 
 	// 通过结果通道获取结果并汇总
 	sum := ProcessResult(resultchan)
@@ -42,6 +50,7 @@ func main() {
 	println("sum=", sum)
 }
 
+// 读取结果通道，汇总数据
 func ProcessResult(resultchan chan int) int {
 	sum := 0
 	for v := range resultchan {
@@ -50,23 +59,29 @@ func ProcessResult(resultchan chan int) int {
 	return sum
 }
 
-// 读取task chan，每个task启动一个worker goroutin进行处理
-// 并等待每个task运行完，关闭结果通道
-func DistributeTask(taskchan <-chan task, wait *sync.WaitGroup, resultchan chan int) {
-
-	for v := range taskchan {
-		wait.Add(1)
-		go ProcessTask(v, wait)
+// 通过done channel同步等待所有工作goroutine结束，然后关闭结果chan
+func CloseResult(done chan struct{}, resultchan chan int, workers int) {
+	for i := 0; i < workers; i++ {
+		<-done
 	}
-
-	wait.Wait()
 	close(resultchan)
 }
 
-// goroutine 处理具体工作，并将处理结果发送到结果通道
-func ProcessTask(t task, wait *sync.WaitGroup) {
-	t.do()
-	wait.Done()
+// 读取task chan并分发到worker goroutine处理，总数是 workers
+func DistributeTask(taskchan <-chan task, workers int, done chan struct{}) {
+
+	for i := 0; i < workers; i++ {
+		go ProcessTask(taskchan, done)
+	}
+
+}
+
+// 工作goroutine处理具体工作，并将处理结果发送结果 chan
+func ProcessTask(taskchan <-chan task, done chan struct{}) {
+	for t := range taskchan {
+		t.do()
+	}
+	done <- struct{}{}
 }
 
 // 构建task并写入task通道
