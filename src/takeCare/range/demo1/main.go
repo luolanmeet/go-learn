@@ -2,6 +2,7 @@ package main
 
 import (
 	"sync"
+	"time"
 )
 
 func test1() {
@@ -16,7 +17,7 @@ func test1() {
 			wg.Done()
 		}()
 
-		//time.Sleep(1 * time.Millisecond)
+		time.Sleep(1 * time.Millisecond)
 		//time.Sleep(2 * time.Second)
 	}
 
