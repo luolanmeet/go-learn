@@ -28,6 +28,8 @@ func main() {
 	http.ListenAndServe(":1234", nil)
 
 	/**
+	http的方式提供rpc服务
+
 	 curl localhost:1234/jsonrpc -X POST \
 		--data '{"method":"HelloService.Hello","params":["hello"],"id":0}'
 	*/
