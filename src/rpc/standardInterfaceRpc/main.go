@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 	"net/rpc"
-	"rpc/demo2/hello"
+	"rpc/standardInterfaceRpc/hello"
 )
 
 func main() {

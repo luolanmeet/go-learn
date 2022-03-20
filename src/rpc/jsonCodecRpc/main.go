@@ -5,7 +5,7 @@ import (
 	"net"
 	"net/rpc"
 	"net/rpc/jsonrpc"
-	"rpc/demo1/hello"
+	"rpc/jsonCodecRpc/hello"
 )
 
 func main() {
