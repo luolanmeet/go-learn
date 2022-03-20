@@ -12,12 +12,14 @@ func doClientWork(client *rpc.Client) {
 	// 启动goroutine监听key变化
 	go func() {
 		var keyChanged string
-		err := client.Call("KVStoreService.Watch", 30, &keyChanged)
+		err := client.Call("KVStoreService.Watch", 10, &keyChanged)
 		if err != nil {
 			log.Fatal(err)
 		}
 		fmt.Println("watch:", keyChanged)
 	}()
+
+	time.Sleep(time.Second * 2)
 
 	// 修改key的值
 	err := client.Call(

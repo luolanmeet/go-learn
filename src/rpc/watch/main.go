@@ -9,7 +9,9 @@ import (
 
 func main() {
 
-	rpc.RegisterName("KVStoreService", store.NewKVStoreService)
+	// 注册服务
+	rpc.RegisterName("KVStoreService", store.NewKVStoreService())
+
 	listener, err := net.Listen("tcp", ":1234")
 	if err != nil {
 		log.Fatal(err)

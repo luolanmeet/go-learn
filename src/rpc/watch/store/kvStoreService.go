@@ -21,6 +21,7 @@ func NewKVStoreService() *KVStoreService {
 }
 
 func (p *KVStoreService) Get(key string, value *string) error {
+
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
@@ -35,6 +36,9 @@ func (p *KVStoreService) Get(key string, value *string) error {
 
 // Set 通常第二个指针参数，声明是 *struct{} ，表示不会用到
 func (p *KVStoreService) Set(kv [2]string, reply *struct{}) error {
+
+	fmt.Println("---Set---")
+
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
@@ -51,6 +55,8 @@ func (p *KVStoreService) Set(kv [2]string, reply *struct{}) error {
 }
 
 func (p *KVStoreService) Watch(timeoutSecond int, keyChanged *string) error {
+
+	fmt.Println("---Watch---")
 
 	id := fmt.Sprintf("watch-%s-%03d", time.Now(), rand.Int())
 	ch := make(chan string, 10) // buffered
