@@ -157,7 +157,7 @@ func testAppend4() {
 }
 
 func main() {
-	fmt.Println("base", "=============")
+	fmt.Println("baseFunc", "=============")
 	base()
 
 	fmt.Println("extend", "=============")
@@ -166,7 +166,7 @@ func main() {
 	fmt.Println("testAppend", "=============")
 	testAppend()
 
-	fmt.Println("other", "=============")
+	fmt.Println("otherFunc", "=============")
 	other()
 
 	fmt.Println("testAppend2", "=============")

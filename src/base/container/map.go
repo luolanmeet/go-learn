@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func base() {
+func baseFunc() {
 
 	// 最后一个值，需要加","号，或者是和}放同一行
 	m1 := map[string]string{
@@ -64,7 +64,7 @@ func main() {
 
 	// map[k]v
 
-	base()
+	baseFunc()
 	ops()
 
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func define() {
+func defineFunc() {
 
 	var arr1 [5]int
 	// 用 := 必须给定值
@@ -51,7 +51,7 @@ func printArray(arr *[5]int) {
 	}
 }
 
-func other() {
+func otherFunc() {
 	arr := [...]int{1: 1, 3: 4}
 	fmt.Printf("%v \n", arr)
 
@@ -67,7 +67,7 @@ func other() {
 
 func main() {
 
-	define()
+	defineFunc()
 	fmt.Println("===========")
 
 	traversal()
@@ -81,7 +81,7 @@ func main() {
 	// printArray(&arr1)
 	fmt.Println("===========")
 
-	other()
+	otherFunc()
 	fmt.Println("===========")
 
 	// 数组的类型，包含了数组的长度，因此 [2]a 和 [3]b 是不一样类型的数组
