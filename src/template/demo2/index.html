@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head/>
+<body>
+<h1>Golang</h1>
+{{/* 如果只有一个变量，就直接用 {{.}} */}}
+{{.Hello}} <br>
+
+{{/* 管道 */}}
+{{`"output"`}} <br>
+{{printf "%q" "output"}} <br>
+{{"output" | printf "%q"}} <br>
+{{printf "%q" (print "out" "put")}} <br>
+{{"put" | printf "%s%s" "out" | printf "%q"}} <br>
+{{"output" | printf "%s" | printf "%q"}} <br>
+
+{{/* 变量 */}} <br>
+{{$Name := "ck"}}
+{{$Name = "cck"}}
+{{$Name}} <br>
+{{$len := (len "hello world")}}
+{{$len}} <br>
+
+{{/* 条件判断 */}} <br>
+{{$Age := 18}}
+{{if (ge $Age 18)}}
+<h3>已成年</h3>
+{{else}}
+<h3>未成年</h3>
+{{end}}
+
+{{/* 循环迭代 */}} <br>
+{{range $f := .Friend -}}
+    {{println $f}}
+{{- end}}
+
+{{/* with-end  管道不为0值时，执行操作 */}} <br>
+{{with .Hello}}{{println "world"}}{{end}}
+
+</body>
+</html>
