@@ -7,5 +7,3 @@ require (
 	golang.org/x/net v0.0.0-20220325170049-de3da57026de
 	golang.org/x/text v0.3.7
 )
-
-require github.com/go-sql-driver/mysql v1.6.0 // indirect
